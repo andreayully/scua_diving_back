@@ -1,8 +1,7 @@
-from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, filters
 
 from scuba_dive_data.models import ScubaDiveData
-from scuba_diving_back.serializers import ScubaDiveDataSerializer
+from scuba_dive_data.serializers import ScubaDiveDataSerializer
 
 
 class ScubaDiveDataListCreateView(generics.ListCreateAPIView):
@@ -13,3 +12,6 @@ class ScubaDiveDataListCreateView(generics.ListCreateAPIView):
     """
     queryset = ScubaDiveData.objects.all()
     serializer_class = ScubaDiveDataSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['max_depth', 'time_bellow_surface', 'starting_ox_level', 'ending_ox_level', 'location', 'ts',
+                     'outside_temp', 'water_temp']
